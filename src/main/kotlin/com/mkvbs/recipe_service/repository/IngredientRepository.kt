@@ -1,6 +1,6 @@
-package com.mkvbs.ingredient.repository
+package com.mkvbs.recipe_service.repository
 
-import com.mkvbs.ingredient.entity.IngredientEntity
+import com.mkvbs.recipe_service.entity.IngredientEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.Optional

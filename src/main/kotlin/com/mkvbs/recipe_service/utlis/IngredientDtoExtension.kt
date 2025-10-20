@@ -1,7 +1,7 @@
-package com.mkvbs.ingredient.utlis
+package com.mkvbs.recipe_service.utlis
 
-import com.mkvbs.ingredient.dto.IngredientDto
-import com.mkvbs.ingredient.entity.IngredientEntity
+import com.mkvbs.recipe_service.dto.IngredientDto
+import com.mkvbs.recipe_service.entity.IngredientEntity
 
 fun IngredientDto.toEntity(): IngredientEntity {
     return IngredientEntity(null, name.lowercase())

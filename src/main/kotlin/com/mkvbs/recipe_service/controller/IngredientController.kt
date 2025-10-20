@@ -1,8 +1,8 @@
-package com.mkvbs.ingredient.controller
+package com.mkvbs.recipe_service.controller
 
-import com.mkvbs.ingredient.dto.IngredientDto
-import com.mkvbs.ingredient.dto.IngredientResponseDto
-import com.mkvbs.ingredient.service.IIngredientService
+import com.mkvbs.recipe_service.dto.IngredientDto
+import com.mkvbs.recipe_service.dto.IngredientResponseDto
+import com.mkvbs.recipe_service.service.IIngredientService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -24,7 +24,7 @@ class IngredientController(
 ){
     @PostMapping("addIngredient")
     fun addIngredient(@RequestBody ingredientDto: IngredientDto): ResponseEntity<IngredientResponseDto> {
-        val savedIngredient = ingredientService.addIngredient(ingredientDto);
+        val savedIngredient = ingredientService.addIngredient(ingredientDto)
         return ResponseEntity.status(HttpStatus.CREATED).body(savedIngredient)
     }
 

@@ -1,8 +1,7 @@
-package com.mkvbs.ingredient.service
+package com.mkvbs.recipe_service.service
 
-import com.mkvbs.ingredient.dto.IngredientDto
-import com.mkvbs.ingredient.dto.IngredientResponseDto
-import org.springframework.http.ResponseEntity
+import com.mkvbs.recipe_service.dto.IngredientDto
+import com.mkvbs.recipe_service.dto.IngredientResponseDto
 import java.util.UUID
 
 interface IIngredientService {

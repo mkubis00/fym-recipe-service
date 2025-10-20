@@ -1,4 +1,4 @@
-package com.mkvbs.ingredient.dto
+package com.mkvbs.recipe_service.dto
 
 import org.springframework.http.HttpStatus
 import java.time.LocalDateTime

@@ -1,11 +1,11 @@
-package com.mkvbs.ingredient
+package com.mkvbs.recipe_service
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class IngredientApplication
+class RecipeServiceApplication
 
 fun main(args: Array<String>) {
-	runApplication<IngredientApplication>(*args)
+	runApplication<RecipeServiceApplication>(*args)
 }

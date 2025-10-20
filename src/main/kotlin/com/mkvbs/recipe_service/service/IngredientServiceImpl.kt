@@ -1,14 +1,14 @@
-package com.mkvbs.ingredient.service
+package com.mkvbs.recipe_service.service
 
-import com.mkvbs.ingredient.dto.IngredientDto
-import com.mkvbs.ingredient.dto.IngredientResponseDto
-import com.mkvbs.ingredient.exception.IngredientAlreadyExistsException
-import com.mkvbs.ingredient.exception.IngredientNotExistsException
-import com.mkvbs.ingredient.exception.ResourceIdNullException
-import com.mkvbs.ingredient.repository.IngredientRepository
-import com.mkvbs.ingredient.utlis.toEntity
-import com.mkvbs.ingredient.utlis.toEntityWithId
-import com.mkvbs.ingredient.utlis.toResponseDto
+import com.mkvbs.recipe_service.dto.IngredientDto
+import com.mkvbs.recipe_service.dto.IngredientResponseDto
+import com.mkvbs.recipe_service.exception.IngredientAlreadyExistsException
+import com.mkvbs.recipe_service.exception.IngredientNotExistsException
+import com.mkvbs.recipe_service.exception.ResourceIdNullException
+import com.mkvbs.recipe_service.repository.IngredientRepository
+import com.mkvbs.recipe_service.utlis.toEntity
+import com.mkvbs.recipe_service.utlis.toEntityWithId
+import com.mkvbs.recipe_service.utlis.toResponseDto
 import org.springframework.stereotype.Service
 import java.util.UUID
 

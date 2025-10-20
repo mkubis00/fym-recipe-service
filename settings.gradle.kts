@@ -1,1 +1,1 @@
-rootProject.name = "ingredient"
+rootProject.name = "recipe-service"

@@ -1,4 +1,4 @@
-package com.mkvbs.ingredient.entity
+package com.mkvbs.recipe_service.entity
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

@@ -1,6 +1,6 @@
-package com.mkvbs.ingredient.exception
+package com.mkvbs.recipe_service.exception
 
-import com.mkvbs.ingredient.dto.ErrorResponseDto
+import com.mkvbs.recipe_service.dto.ErrorResponseDto
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
