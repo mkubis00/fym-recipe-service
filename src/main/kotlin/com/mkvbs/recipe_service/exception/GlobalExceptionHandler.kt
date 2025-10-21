@@ -24,14 +24,14 @@ class GlobalExceptionHandler {
 
 
 
-    @ExceptionHandler(IngredientAlreadyExistsException::class)
-    fun handleIngredientAlreadyExists(ex: IngredientAlreadyExistsException) : ResponseEntity<ErrorResponseDto> {
+    @ExceptionHandler(ResourceAlreadyExistsException::class)
+    fun handleResourceAlreadyExists(ex: ResourceAlreadyExistsException) : ResponseEntity<ErrorResponseDto> {
         val errorResponse = ErrorResponseDto(HttpStatus.BAD_REQUEST, ex.message)
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(IngredientNotExistsException::class)
-    fun handleIngredientNotExists(ex: IngredientNotExistsException) : ResponseEntity<ErrorResponseDto> {
+    @ExceptionHandler(NoResourceExistsException::class)
+    fun handleNotResourceExists(ex: NoResourceExistsException) : ResponseEntity<ErrorResponseDto> {
         val errorResponse = ErrorResponseDto(HttpStatus.NOT_FOUND, ex.message)
         return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
     }

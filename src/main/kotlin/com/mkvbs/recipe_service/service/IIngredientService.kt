@@ -1,14 +1,13 @@
 package com.mkvbs.recipe_service.service
 
-import com.mkvbs.recipe_service.dto.IngredientDto
-import com.mkvbs.recipe_service.dto.IngredientResponseDto
+import com.mkvbs.recipe_service.domain.Ingredient
 import java.util.UUID
 
 interface IIngredientService {
 
-    fun addIngredient(ingredientDto: IngredientDto): IngredientResponseDto
-    fun getIngredientById(id: UUID): IngredientResponseDto
-    fun getIngredientByName(name: String): IngredientResponseDto
-    fun deleteIngredient(id: UUID): IngredientResponseDto
-    fun updateIngredient(ingredientDto: IngredientDto): IngredientResponseDto
+    fun addIngredient(ingredientToSave: Ingredient): Ingredient
+    fun getIngredientById(id: UUID): Ingredient
+    fun getIngredientByName(name: String): Ingredient
+    fun deleteIngredient(id: UUID): Ingredient
+    fun updateIngredient(ingredientToUpdate: Ingredient): Ingredient
 }

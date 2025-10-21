@@ -1,14 +1,13 @@
 package com.mkvbs.recipe_service.service
 
-import com.mkvbs.recipe_service.dto.IngredientDto
-import com.mkvbs.recipe_service.dto.IngredientResponseDto
-import com.mkvbs.recipe_service.exception.IngredientAlreadyExistsException
-import com.mkvbs.recipe_service.exception.IngredientNotExistsException
+import com.mkvbs.recipe_service.domain.Ingredient
+import com.mkvbs.recipe_service.exception.ResourceAlreadyExistsException
+import com.mkvbs.recipe_service.exception.NoResourceExistsException
 import com.mkvbs.recipe_service.exception.ResourceIdNullException
 import com.mkvbs.recipe_service.repository.IngredientRepository
 import com.mkvbs.recipe_service.utlis.toEntity
+import com.mkvbs.recipe_service.utlis.toDomain
 import com.mkvbs.recipe_service.utlis.toEntityWithId
-import com.mkvbs.recipe_service.utlis.toResponseDto
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -17,41 +16,39 @@ class IngredientServiceImpl(
     private val ingredientRepository: IngredientRepository,
 ) : IIngredientService {
 
-    override fun addIngredient(ingredientDto: IngredientDto): IngredientResponseDto {
-        val ingredientToSave = ingredientDto.toEntity()
+    override fun addIngredient(ingredientToSave: Ingredient): Ingredient {
         val isIngredientExists = this.ingredientRepository.existsByName(ingredientToSave.name)
         if (!isIngredientExists) {
-            return ingredientRepository.save(ingredientToSave).toResponseDto()
+            return ingredientRepository.save(ingredientToSave.toEntity()).toDomain()
         }
-        throw IngredientAlreadyExistsException(ingredientToSave.name)
+        throw ResourceAlreadyExistsException(ingredientToSave.name)
     }
 
-    override fun getIngredientById(id: UUID): IngredientResponseDto {
-        val ingredient = ingredientRepository.findById(id).orElseThrow { IngredientNotExistsException(id) }
-        return ingredient.toResponseDto()
+    override fun getIngredientById(id: UUID): Ingredient {
+        val ingredient = ingredientRepository.findById(id).orElseThrow { NoResourceExistsException(id) }
+        return ingredient.toDomain()
     }
 
-    override fun getIngredientByName(name: String): IngredientResponseDto {
+    override fun getIngredientByName(name: String): Ingredient{
         val ingredientLowerCase = name.lowercase()
         val ingredient =
-            ingredientRepository.findIngredientByName(ingredientLowerCase).orElseThrow { IngredientNotExistsException(ingredientLowerCase) }
-        return ingredient.toResponseDto()
+            ingredientRepository.findIngredientByName(ingredientLowerCase).orElseThrow { NoResourceExistsException(ingredientLowerCase) }
+        return ingredient.toDomain()
     }
 
-    override fun deleteIngredient(id: UUID): IngredientResponseDto {
-        val ingredientToDelete = ingredientRepository.findById(id).orElseThrow { IngredientNotExistsException(id) }
+    override fun deleteIngredient(id: UUID): Ingredient {
+        val ingredientToDelete = ingredientRepository.findById(id).orElseThrow { NoResourceExistsException(id) }
         ingredientRepository.delete(ingredientToDelete)
-        return ingredientToDelete.toResponseDto()
+        return ingredientToDelete.toDomain()
     }
 
-    override fun updateIngredient(ingredientDto: IngredientDto): IngredientResponseDto {
-        val ingredientToUpdate = ingredientDto.toEntityWithId()
+    override fun updateIngredient(ingredientToUpdate: Ingredient): Ingredient {
         if (ingredientToUpdate.id != null) {
             val isIngredientExists = ingredientRepository.existsById(ingredientToUpdate.id)
             if (isIngredientExists) {
-                return ingredientRepository.save(ingredientToUpdate).toResponseDto()
+                return ingredientRepository.save(ingredientToUpdate.toEntityWithId()).toDomain()
             } else {
-                throw IngredientAlreadyExistsException(ingredientToUpdate.id)
+                throw ResourceAlreadyExistsException(ingredientToUpdate.id)
             }
         } else {
             throw ResourceIdNullException()

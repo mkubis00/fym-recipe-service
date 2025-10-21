@@ -1,8 +1,11 @@
 package com.mkvbs.recipe_service.controller
 
-import com.mkvbs.recipe_service.dto.IngredientDto
-import com.mkvbs.recipe_service.dto.IngredientResponseDto
+import com.mkvbs.recipe_service.dto.ingredient.IngredientDto
+import com.mkvbs.recipe_service.dto.ingredient.IngredientResponseDto
 import com.mkvbs.recipe_service.service.IIngredientService
+import com.mkvbs.recipe_service.utlis.toDomain
+import com.mkvbs.recipe_service.utlis.toDomainWithId
+import com.mkvbs.recipe_service.utlis.toResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -24,31 +27,31 @@ class IngredientController(
 ){
     @PostMapping("addIngredient")
     fun addIngredient(@RequestBody ingredientDto: IngredientDto): ResponseEntity<IngredientResponseDto> {
-        val savedIngredient = ingredientService.addIngredient(ingredientDto)
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedIngredient)
+        val savedIngredient = ingredientService.addIngredient(ingredientDto.toDomain())
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedIngredient.toResponseDto())
     }
 
     @GetMapping("/ingredientById/{id}")
     fun getIngredientById(@PathVariable id: UUID): ResponseEntity<IngredientResponseDto> {
         val ingredient = ingredientService.getIngredientById(id)
-        return ResponseEntity.status(HttpStatus.OK).body(ingredient)
+        return ResponseEntity.status(HttpStatus.OK).body(ingredient.toResponseDto())
     }
 
     @GetMapping("/ingredientByName/{name}")
     fun getIngredientByName(@PathVariable name: String): ResponseEntity<IngredientResponseDto> {
         val ingredient = ingredientService.getIngredientByName(name)
-        return ResponseEntity.status(HttpStatus.OK).body(ingredient)
+        return ResponseEntity.status(HttpStatus.OK).body(ingredient.toResponseDto())
     }
 
     @PutMapping("/updateIngredient")
     fun updateIngredient(@RequestBody ingredientDto: IngredientDto): ResponseEntity<IngredientResponseDto> {
-        val updatedIngredient = ingredientService.updateIngredient(ingredientDto)
-        return ResponseEntity.status(HttpStatus.OK).body(updatedIngredient)
+        val updatedIngredient = ingredientService.updateIngredient(ingredientDto.toDomainWithId())
+        return ResponseEntity.status(HttpStatus.OK).body(updatedIngredient.toResponseDto())
     }
 
     @DeleteMapping("/deleteIngredient/{id}")
     fun deleteIngredient(@PathVariable id: UUID): ResponseEntity<IngredientResponseDto> {
         val deletedIngredient = ingredientService.deleteIngredient(id)
-        return ResponseEntity.status(HttpStatus.OK).body(deletedIngredient)
+        return ResponseEntity.status(HttpStatus.OK).body(deletedIngredient.toResponseDto())
     }
 }

@@ -1,12 +1,12 @@
 package com.mkvbs.recipe_service.utlis
 
-import com.mkvbs.recipe_service.dto.IngredientDto
-import com.mkvbs.recipe_service.entity.IngredientEntity
+import com.mkvbs.recipe_service.domain.Ingredient
+import com.mkvbs.recipe_service.dto.ingredient.IngredientDto
 
-fun IngredientDto.toEntity(): IngredientEntity {
-    return IngredientEntity(null, name.lowercase())
+fun IngredientDto.toDomain(): Ingredient {
+    return Ingredient(null, name.lowercase())
 }
 
-fun IngredientDto.toEntityWithId(): IngredientEntity {
-    return IngredientEntity(id, name.lowercase())
+fun IngredientDto.toDomainWithId(): Ingredient {
+    return Ingredient(id, name.lowercase())
 }

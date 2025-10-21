@@ -1,4 +1,4 @@
-package com.mkvbs.recipe_service.dto
+package com.mkvbs.recipe_service.dto.ingredient
 
 import java.util.UUID
 

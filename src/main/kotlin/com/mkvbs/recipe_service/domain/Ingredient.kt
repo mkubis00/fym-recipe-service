@@ -1,8 +1,9 @@
-package com.mkvbs.recipe_service.dto
+package com.mkvbs.recipe_service.domain
 
 import java.util.UUID
 
-data class IngredientDto (
+class Ingredient(
     val id: UUID? = null,
     val name: String
-)
+) {
+}
