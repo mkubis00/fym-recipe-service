@@ -1,6 +1,9 @@
 package com.mkvbs.recipe_service.exception
 
 import com.mkvbs.recipe_service.dto.ErrorResponseDto
+import com.mkvbs.recipe_service.exception.no_resource_found.NoResourceFoundException
+import com.mkvbs.recipe_service.exception.id_null.ResourceIdNullException
+import com.mkvbs.recipe_service.exception.resource_already_exists.ResourceAlreadyExistsException
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
@@ -30,8 +33,8 @@ class GlobalExceptionHandler {
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(NoResourceExistsException::class)
-    fun handleNotResourceExists(ex: NoResourceExistsException) : ResponseEntity<ErrorResponseDto> {
+    @ExceptionHandler(NoResourceFoundException::class)
+    fun handleNotResourceExists(ex: NoResourceFoundException) : ResponseEntity<ErrorResponseDto> {
         val errorResponse = ErrorResponseDto(HttpStatus.NOT_FOUND, ex.message)
         return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
     }

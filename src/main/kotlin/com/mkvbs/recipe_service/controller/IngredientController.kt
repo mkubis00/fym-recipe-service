@@ -3,9 +3,9 @@ package com.mkvbs.recipe_service.controller
 import com.mkvbs.recipe_service.dto.ingredient.IngredientDto
 import com.mkvbs.recipe_service.dto.ingredient.IngredientResponseDto
 import com.mkvbs.recipe_service.service.IIngredientService
-import com.mkvbs.recipe_service.utlis.toDomain
-import com.mkvbs.recipe_service.utlis.toDomainWithId
-import com.mkvbs.recipe_service.utlis.toResponseDto
+import com.mkvbs.recipe_service.utlis.ingredient.toDomain
+import com.mkvbs.recipe_service.utlis.ingredient.toDomainWithId
+import com.mkvbs.recipe_service.utlis.ingredient.toResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
