@@ -14,17 +14,32 @@ interface IRecipeService {
      * Add recipe
      *
      * @param recipeToCreate
+     * @param ingredientsIds
      * @return
-     * @throws
      */
-    fun addRecipe(recipeToCreate: Recipe): Recipe
+    fun addRecipe(recipeToCreate: Recipe, ingredientsIds: List<UUID>): Recipe
 
     /**
-     * Get recipe by id
+     * Get recipe
      *
      * @param recipeId
-     * @return Recipe objects
-     * @throws
+     * @return
      */
     fun getRecipe(recipeId: UUID): Recipe
+
+    /**
+     * Update recipe
+     *
+     * @param recipeToUpdate
+     * @return
+     */
+    fun updateRecipe(recipeToUpdate: Recipe): Recipe
+
+    /**
+     * Delete recipe
+     *
+     * @param recipeId
+     * @return
+     */
+    fun deleteRecipe(recipeId: UUID): Recipe
 }

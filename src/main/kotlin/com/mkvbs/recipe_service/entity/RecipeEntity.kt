@@ -26,5 +26,6 @@ data class RecipeEntity(
 
     val name: String,
     val description: String,
-    val steps: List<String>
+    val steps: List<String>,
+    val numberOfIngredients: Int,
 )

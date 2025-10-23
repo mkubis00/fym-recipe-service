@@ -8,5 +8,5 @@ data class RecipeResponseDto(
     val ingredients: List<IngredientResponseDto>,
     val name: String,
     val description: String,
-    val steps: List<String>
+    val steps: List<String>,
 )

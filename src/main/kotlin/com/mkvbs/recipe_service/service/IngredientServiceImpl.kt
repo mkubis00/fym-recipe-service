@@ -59,14 +59,14 @@ class IngredientServiceImpl(
     }
 
     @Transactional(readOnly = true)
-    override fun getIngredients(ingredientIds: List<UUID>): List<Ingredient> {
+    override fun getIngredients(ingredientIds: List<UUID>): MutableList<Ingredient> {
         val existingIngredientsEntities = ingredientRepository.findAllById(ingredientIds)
         val existingIngredients = existingIngredientsEntities.map { it.toDomain() }
-        val noFoundIngredients = ingredientIds.filter { id -> existingIngredients.any { it.id == id } }
+        val noFoundIngredients = ingredientIds.filter { id -> existingIngredients.none { it.id == id } }
         if (noFoundIngredients.isNotEmpty()) {
             val noFoundIngredientsIds = noFoundIngredients.joinToString(", ")
             throw NoIngredientsFoundException("ids", noFoundIngredientsIds)
         }
-        return existingIngredients
+        return existingIngredients.toMutableList()
     }
 }

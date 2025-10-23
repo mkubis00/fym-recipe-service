@@ -67,5 +67,5 @@ interface IIngredientService {
      * @return list of ingredients with specific ids
      * @throws NoIngredientsFoundException
      */
-    fun getIngredients(ingredientIds: List<UUID>): List<Ingredient>
+    fun getIngredients(ingredientIds: List<UUID>): MutableList<Ingredient>
 }

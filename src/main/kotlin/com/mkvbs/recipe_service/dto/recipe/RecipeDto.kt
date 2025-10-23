@@ -7,5 +7,5 @@ data class RecipeDto(
     val ingredients: List<UUID>,
     val name: String,
     val description: String,
-    val steps: List<String>
+    val steps: List<String>,
 )
