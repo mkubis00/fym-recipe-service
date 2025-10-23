@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
-@RequestMapping("/api/v1", produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping("/api/ingredient/v1", produces = [MediaType.APPLICATION_JSON_VALUE])
 class IngredientController(
     private val ingredientService: IIngredientService
 ){
-    @PostMapping("addIngredient")
+    @PostMapping("/addIngredient")
     fun addIngredient(@RequestBody ingredientDto: IngredientDto): ResponseEntity<IngredientResponseDto> {
         val savedIngredient = ingredientService.addIngredient(ingredientDto.toDomain())
         return ResponseEntity.status(HttpStatus.CREATED).body(savedIngredient.toResponseDto())

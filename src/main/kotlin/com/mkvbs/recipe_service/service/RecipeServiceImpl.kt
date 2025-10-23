@@ -3,7 +3,7 @@ package com.mkvbs.recipe_service.service
 import com.mkvbs.recipe_service.domain.Recipe
 import com.mkvbs.recipe_service.exception.no_resource_found.NoRecipeFoundException
 import com.mkvbs.recipe_service.repository.RecipeRepository
-import jakarta.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Service
 import java.util.UUID
 

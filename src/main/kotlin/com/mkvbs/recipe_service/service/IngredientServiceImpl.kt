@@ -10,6 +10,7 @@ import com.mkvbs.recipe_service.utlis.ingredient.toEntity
 import com.mkvbs.recipe_service.utlis.ingredient.toDomain
 import com.mkvbs.recipe_service.utlis.ingredient.toEntityWithId
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
@@ -57,6 +58,7 @@ class IngredientServiceImpl(
         return ingredient.toDomain()
     }
 
+    @Transactional(readOnly = true)
     override fun getIngredients(ingredientIds: List<UUID>): List<Ingredient> {
         val existingIngredientsEntities = ingredientRepository.findAllById(ingredientIds)
         val existingIngredients = existingIngredientsEntities.map { it.toDomain() }
