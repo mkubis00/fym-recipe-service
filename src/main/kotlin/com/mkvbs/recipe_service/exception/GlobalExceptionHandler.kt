@@ -11,10 +11,21 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 
+/**
+ * Global exception handler
+ *
+ * @constructor Create empty Global exception handler
+ */
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 class GlobalExceptionHandler {
 
+    /**
+     * Handle global exceptions
+     *
+     * @param ex cached Exception
+     * @return ResponseEntity<ErrorResponseDto>
+     */
     @ExceptionHandler(Exception::class)
     fun handleGlobalExceptions(ex: Exception): ResponseEntity<ErrorResponseDto> {
         val errorResponse = if (ex.message != null) {
@@ -26,19 +37,36 @@ class GlobalExceptionHandler {
     }
 
 
-
+    /**
+     * Handle resource already exists exception
+     *
+     * @param ex cached ResourceAlreadyExistsException
+     * @return ResponseEntity<ErrorResponseDto>
+     */
     @ExceptionHandler(ResourceAlreadyExistsException::class)
-    fun handleResourceAlreadyExists(ex: ResourceAlreadyExistsException) : ResponseEntity<ErrorResponseDto> {
+    fun handleResourceAlreadyExistsException(ex: ResourceAlreadyExistsException) : ResponseEntity<ErrorResponseDto> {
         val errorResponse = ErrorResponseDto(HttpStatus.BAD_REQUEST, ex.message)
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
     }
 
+    /**
+     * Handle no resource found exception
+     *
+     * @param ex cached NoResourceFoundException
+     * @return ResponseEntity<ErrorResponseDto>
+     */
     @ExceptionHandler(NoResourceFoundException::class)
-    fun handleNotResourceExists(ex: NoResourceFoundException) : ResponseEntity<ErrorResponseDto> {
+    fun handleNoResourceFoundException(ex: NoResourceFoundException) : ResponseEntity<ErrorResponseDto> {
         val errorResponse = ErrorResponseDto(HttpStatus.NOT_FOUND, ex.message)
         return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
     }
 
+    /**
+     * Handle resource id null exception
+     *
+     * @param ex cached ResourceIdNullException
+     * @return ResponseEntity<ErrorResponseDto>
+     *///maybe internal error???
     @ExceptionHandler(ResourceIdNullException::class)
     fun handleResourceIdNullException(ex: ResourceIdNullException) : ResponseEntity<ErrorResponseDto> {
         val errorResponse = ErrorResponseDto(HttpStatus.BAD_REQUEST, ex.message)

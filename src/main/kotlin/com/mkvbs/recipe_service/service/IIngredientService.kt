@@ -6,8 +6,11 @@ import java.util.UUID
 interface IIngredientService {
 
     fun addIngredient(ingredientToSave: Ingredient): Ingredient
-    fun getIngredientById(id: UUID): Ingredient
-    fun getIngredientByName(name: String): Ingredient
+
     fun deleteIngredient(id: UUID): Ingredient
     fun updateIngredient(ingredientToUpdate: Ingredient): Ingredient
+
+    fun getIngredientById(id: UUID): Ingredient
+    fun getIngredientByName(name: String): Ingredient
+    fun getIngredients(ingredientIds: List<UUID>): List<Ingredient>
 }
