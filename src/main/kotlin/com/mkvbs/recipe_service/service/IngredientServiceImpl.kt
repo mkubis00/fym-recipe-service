@@ -5,10 +5,12 @@ import com.mkvbs.recipe_service.exception.id_null.IngredientIdNullException
 import com.mkvbs.recipe_service.exception.no_resource_found.NoIngredientFoundException
 import com.mkvbs.recipe_service.exception.no_resource_found.NoIngredientsFoundException
 import com.mkvbs.recipe_service.exception.resource_already_exists.IngredientAlreadyExistsException
+import com.mkvbs.recipe_service.exception.unable_to_delete.UnableToDeleteIngredientException
 import com.mkvbs.recipe_service.repository.IngredientRepository
 import com.mkvbs.recipe_service.utlis.ingredient.toEntity
 import com.mkvbs.recipe_service.utlis.ingredient.toDomain
 import com.mkvbs.recipe_service.utlis.ingredient.toEntityWithId
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -18,6 +20,7 @@ class IngredientServiceImpl(
     private val ingredientRepository: IngredientRepository,
 ) : IIngredientService {
 
+    @Transactional
     override fun addIngredient(ingredientToSave: Ingredient): Ingredient {
         val isIngredientExists = this.ingredientRepository.existsByName(ingredientToSave.name)
         if (isIngredientExists) {
@@ -26,12 +29,19 @@ class IngredientServiceImpl(
         return ingredientRepository.save(ingredientToSave.toEntity()).toDomain()
     }
 
+    @Transactional
     override fun deleteIngredient(id: UUID): Ingredient {
         val ingredientToDelete = ingredientRepository.findById(id).orElseThrow { NoIngredientFoundException("ID", id.toString()) }
-        ingredientRepository.delete(ingredientToDelete)
+        try {
+            ingredientRepository.delete(ingredientToDelete)
+            ingredientRepository.flush()
+        } catch (_: DataIntegrityViolationException) {
+            throw UnableToDeleteIngredientException(id)
+        }
         return ingredientToDelete.toDomain()
     }
 
+    @Transactional
     override fun updateIngredient(ingredientToUpdate: Ingredient): Ingredient {
         if (ingredientToUpdate.id != null) {
             val isIngredientExists = ingredientRepository.existsById(ingredientToUpdate.id)

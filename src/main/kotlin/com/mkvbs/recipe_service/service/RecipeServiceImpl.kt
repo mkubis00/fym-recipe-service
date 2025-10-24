@@ -31,6 +31,7 @@ class RecipeServiceImpl(
         throw NoIngredientsFoundForRecipeException(recipeId.toString())
     }
 
+    @Transactional
     override fun updateRecipe(recipeToUpdate: Recipe): Recipe {
         TODO("Not yet implemented")
     }
