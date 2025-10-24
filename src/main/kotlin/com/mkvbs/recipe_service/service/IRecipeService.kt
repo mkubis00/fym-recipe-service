@@ -31,9 +31,10 @@ interface IRecipeService {
      * Update recipe
      *
      * @param recipeToUpdate
+     * @param ingredientsIds
      * @return
      */
-    fun updateRecipe(recipeToUpdate: Recipe): Recipe
+    fun updateRecipe(recipeToUpdate: Recipe, ingredientsIds: List<UUID>): Recipe
 
     /**
      * Delete recipe

@@ -19,7 +19,10 @@ fun Recipe.toEntity(): RecipeEntity {
 }
 
 fun Recipe.toEntityWithId(): RecipeEntity {
-    TODO()
+    if (id == null) throw RecipeIdNullException()
+    if (numberOfIngredients == null) throw NoIngredientsFoundForRecipeException("ID not set yet")
+    val ingredientsEntities = ingredients.map { it.toEntityWithId() }.toMutableList()
+    return RecipeEntity(id, ingredientsEntities, name, description, steps,ingredientsEntities.size)
 }
 
 fun Recipe.toResponseDto(): RecipeResponseDto {

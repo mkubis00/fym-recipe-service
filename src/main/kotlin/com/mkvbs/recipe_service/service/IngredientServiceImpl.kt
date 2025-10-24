@@ -43,16 +43,10 @@ class IngredientServiceImpl(
 
     @Transactional
     override fun updateIngredient(ingredientToUpdate: Ingredient): Ingredient {
-        if (ingredientToUpdate.id != null) {
-            val isIngredientExists = ingredientRepository.existsById(ingredientToUpdate.id)
-            if (isIngredientExists) {
-                return ingredientRepository.save(ingredientToUpdate.toEntityWithId()).toDomain()
-            } else {
-                throw NoIngredientFoundException("ID", ingredientToUpdate.id.toString())
-            }
-        } else {
-            throw IngredientIdNullException()
-        }
+        if (ingredientToUpdate.id == null) throw IngredientIdNullException()
+        val isIngredientExists = ingredientRepository.existsById(ingredientToUpdate.id)
+        if (isIngredientExists) return ingredientRepository.save(ingredientToUpdate.toEntityWithId()).toDomain()
+        throw NoIngredientFoundException("ID", ingredientToUpdate.id.toString())
     }
 
     override fun getIngredientById(id: UUID): Ingredient {

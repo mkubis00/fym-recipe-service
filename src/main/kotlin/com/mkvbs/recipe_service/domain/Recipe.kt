@@ -8,7 +8,7 @@ class Recipe(
     val name: String,
     val description: String,
     val steps: List<String>,
-    val numberOfIngredients: Int? = ingredients.size,
+    var numberOfIngredients: Int? = ingredients.size,
 ) {
 
 }
