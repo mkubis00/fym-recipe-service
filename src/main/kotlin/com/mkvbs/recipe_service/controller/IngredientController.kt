@@ -1,5 +1,6 @@
 package com.mkvbs.recipe_service.controller
 
+import com.mkvbs.recipe_service.dto.ErrorResponseDto
 import com.mkvbs.recipe_service.dto.ingredient.IngredientDto
 import com.mkvbs.recipe_service.dto.ingredient.IngredientResponseDto
 import com.mkvbs.recipe_service.service.IIngredientService
@@ -7,7 +8,10 @@ import com.mkvbs.recipe_service.utlis.ingredient.toDomain
 import com.mkvbs.recipe_service.utlis.ingredient.toDomainWithId
 import com.mkvbs.recipe_service.utlis.ingredient.toResponseDto
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotEmpty
@@ -36,16 +40,30 @@ import java.util.UUID
 @Validated
 class IngredientController(
     private val ingredientService: IIngredientService
-){
+) {
 
     @Operation(
         summary = "Create Ingredient REST API",
         description = "REST API to create new ingredient"
     )
-    @ApiResponse(
-        responseCode = "201",
-        description = "HTTP Status.CREATED"
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "201",
+                description = "HTTP Status CREATED"
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "HTTP Status BAD_REQUEST",
+                content = [
+                    Content(
+                        schema = Schema(implementation = ErrorResponseDto::class)
+                    )
+                ]
+            )
+        ]
     )
+
     @PostMapping("/addIngredient")
     fun addIngredient(@Valid @RequestBody ingredientDto: IngredientDto): ResponseEntity<IngredientResponseDto> {
         val savedIngredient = ingredientService.addIngredient(ingredientDto.toDomain())
@@ -103,8 +121,14 @@ class IngredientController(
         description = "HTTP Status.OK"
     )
     @GetMapping("/ingredientByName/{name}")
-    fun getIngredientByName(@PathVariable  @NotEmpty(message = "Name can not be null or empty")
-                            @Size(min = 3, max = 30, message = "Name can not be less than 3 and not greater than 30 characters") name: String): ResponseEntity<IngredientResponseDto> {
+    fun getIngredientByName(
+        @PathVariable @NotEmpty(message = "Name can not be null or empty")
+        @Size(
+            min = 3,
+            max = 30,
+            message = "Name can not be less than 3 and not greater than 30 characters"
+        ) name: String
+    ): ResponseEntity<IngredientResponseDto> {
         val ingredient = ingredientService.getIngredientByName(name)
         return ResponseEntity.status(HttpStatus.OK).body(ingredient.toResponseDto())
     }
