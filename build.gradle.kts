@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.mkvbs"
-version = "1.0.1-SNAPSHOT"
+version = "1.0.1"
 description = "Demo project for Spring Boot"
 
 java {
