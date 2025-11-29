@@ -1,15 +1,21 @@
 package com.mkvbs.recipe_service.controller
 
+import com.mkvbs.recipe_service.dto.ErrorResponseDto
 import com.mkvbs.recipe_service.dto.recipe.RecipeDto
 import com.mkvbs.recipe_service.dto.recipe.RecipeResponseDto
 import com.mkvbs.recipe_service.service.IRecipeService
+import com.mkvbs.recipe_service.utlis.contentToResponseDto
 import com.mkvbs.recipe_service.utlis.recipe.toDomain
 import com.mkvbs.recipe_service.utlis.recipe.toDomainWithId
 import com.mkvbs.recipe_service.utlis.recipe.toResponseDto
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -21,8 +27,9 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID
+import java.util.*
 
 @Tag(
     name = "CRUD REST APIs for Recipes",
@@ -91,5 +98,51 @@ class RecipeController(
     fun deleteRecipe(@PathVariable id: UUID): ResponseEntity<RecipeResponseDto> {
         val deletedRecipeDto = recipeService.deleteRecipe(id).toResponseDto()
         return ResponseEntity.status(HttpStatus.OK).body(deletedRecipeDto)
+    }
+
+    @Operation(
+        summary = "Get recipes with specified requirements",
+        description = "Returns a pageable list of recipes with defined requirements."
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "List of recipes successfully returned."
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "Unexpected server error while retrieving recipes.",
+                content = [Content(
+                    schema = Schema(
+                        implementation = ErrorResponseDto::class
+                    )
+                )]
+            )
+        ]
+    )
+    @GetMapping("get-recipes")
+    fun getRecipes(
+        @RequestParam("page", required = true) page: Int,
+        @RequestParam("page_size", required = true) pageSize: Int,
+        @RequestParam("min_ingredient count", required = false) minIngredientCount: Int?,
+        @RequestParam("max_ingredient count", required = false) maxIngredientCount: Int?,
+        @RequestParam("min steps count", required = true) minStepsCount: Int?,
+        @RequestParam("max steps count", required = true) maxStepsCount: Int?,
+        @RequestParam("includedIngredientsIds", required = false) includedIngredientsIds: Set<UUID>?,
+        @RequestParam("excludedIngredientsIds", required = false) excludedIngredientsIds: Set<UUID>?,
+    ): ResponseEntity<Page<RecipeResponseDto>> {
+        val pageOfFoundRecipes = recipeService.getRecipes(
+            page,
+            pageSize,
+            minIngredientCount,
+            maxIngredientCount,
+            minStepsCount,
+            maxStepsCount,
+            includedIngredientsIds,
+            excludedIngredientsIds
+        )
+        val pageOfFoundRecipesResponseDto = pageOfFoundRecipes.contentToResponseDto()
+        return ResponseEntity.status(HttpStatus.OK).body(pageOfFoundRecipesResponseDto)
     }
 }

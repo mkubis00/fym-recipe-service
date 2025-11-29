@@ -21,4 +21,5 @@ spring:
     properties:
       hibernate.format_sql: true
       hibernate.jdbc.lob.non_contextual_creation: true
+    defer-datasource-initialization: true
 

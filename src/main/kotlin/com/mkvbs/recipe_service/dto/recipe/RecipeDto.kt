@@ -3,7 +3,7 @@ package com.mkvbs.recipe_service.dto.recipe
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.Size
-import java.util.UUID
+import java.util.*
 
 @Schema(
     name= "Recipe",
@@ -22,7 +22,7 @@ data class RecipeDto(
         example = "[\"3fa85f64-5717-4562-b3fc-2c963f66afa6\", \"1afa85f64-5717-4562-b3fc-2c963f66afa6\", \"4ca85f64-5717-4562-b3fc-2c963f66afa6\"]"
     )
     @field:Size(min = 3, message = "Recipe must contain at least 3 ingredients")
-    val ingredients: List<UUID>,
+    val ingredients: Set<UUID>,
 
     @field:Schema(
         description = "Name of the recipe",
@@ -45,5 +45,5 @@ data class RecipeDto(
         example = "[\"step1\", \"step2\", \"step3\"]"
     )
     @field:Size(min = 3, message = "Recipe must contain at least 3 steps")
-    val steps: List<String>,
+    val steps: Set<String>,
 )

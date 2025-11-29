@@ -5,7 +5,7 @@ import com.mkvbs.recipe_service.exception.id_null.IngredientIdNullException
 import com.mkvbs.recipe_service.exception.no_resource_found.NoIngredientFoundException
 import com.mkvbs.recipe_service.exception.no_resource_found.NoIngredientsFoundException
 import com.mkvbs.recipe_service.exception.resource_already_exists.IngredientAlreadyExistsException
-import java.util.UUID
+import java.util.*
 
 /**
  * Ingredient service
@@ -67,5 +67,5 @@ interface IIngredientService {
      * @return list of ingredients with specific ids
      * @throws NoIngredientsFoundException
      */
-    fun getIngredients(ingredientIds: List<UUID>): MutableList<Ingredient>
+    fun getIngredients(ingredientIds: Set<UUID>): Set<Ingredient>
 }

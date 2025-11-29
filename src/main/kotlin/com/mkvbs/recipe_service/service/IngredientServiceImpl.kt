@@ -7,13 +7,13 @@ import com.mkvbs.recipe_service.exception.no_resource_found.NoIngredientsFoundEx
 import com.mkvbs.recipe_service.exception.resource_already_exists.IngredientAlreadyExistsException
 import com.mkvbs.recipe_service.exception.unable_to_delete.UnableToDeleteIngredientException
 import com.mkvbs.recipe_service.repository.IngredientRepository
-import com.mkvbs.recipe_service.utlis.ingredient.toEntity
 import com.mkvbs.recipe_service.utlis.ingredient.toDomain
+import com.mkvbs.recipe_service.utlis.ingredient.toEntity
 import com.mkvbs.recipe_service.utlis.ingredient.toEntityWithId
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.UUID
+import java.util.*
 
 @Service
 class IngredientServiceImpl(
@@ -63,7 +63,7 @@ class IngredientServiceImpl(
     }
 
     @Transactional(readOnly = true)
-    override fun getIngredients(ingredientIds: List<UUID>): MutableList<Ingredient> {
+    override fun getIngredients(ingredientIds: Set<UUID>): Set<Ingredient> {
         val existingIngredientsEntities = ingredientRepository.findAllById(ingredientIds)
         val existingIngredients = existingIngredientsEntities.map { it.toDomain() }
         val noFoundIngredients = ingredientIds.filter { id -> existingIngredients.none { it.id == id } }
@@ -71,6 +71,6 @@ class IngredientServiceImpl(
             val noFoundIngredientsIds = noFoundIngredients.joinToString(", ")
             throw NoIngredientsFoundException("ids", noFoundIngredientsIds)
         }
-        return existingIngredients.toMutableList()
+        return existingIngredients.toSet()
     }
 }

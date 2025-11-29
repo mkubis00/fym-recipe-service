@@ -2,7 +2,7 @@ package com.mkvbs.recipe_service.dto.recipe
 
 import com.mkvbs.recipe_service.dto.ingredient.IngredientResponseDto
 import io.swagger.v3.oas.annotations.media.Schema
-import java.util.UUID
+import java.util.*
 
 @Schema(
     name= "Recipe Response",
@@ -19,7 +19,7 @@ data class RecipeResponseDto(
     @field:Schema(
         description = "List of ingredients of recipe"
     )
-    val ingredients: List<IngredientResponseDto>,
+    val ingredients: Set<IngredientResponseDto>,
 
     @field:Schema(
         description = "Name of the recipe",
@@ -37,5 +37,5 @@ data class RecipeResponseDto(
         description = "List of steps of recipe, recipe contains at least 3 steps.",
         example = "[\"step1\", \"step2\", \"step3\"]"
     )
-    val steps: List<String>,
+    val steps: Set<String>,
 )

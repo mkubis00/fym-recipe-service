@@ -1,14 +1,13 @@
 package com.mkvbs.recipe_service.domain
 
-import java.util.UUID
+import java.util.*
 
 class Recipe(
     val id: UUID? = null,
-    var ingredients: MutableList<Ingredient>,
+    var ingredients: Set<Ingredient>,
     val name: String,
     val description: String,
-    val steps: List<String>,
-    var numberOfIngredients: Int? = ingredients.size,
+    val steps: Set<String>,
 ) {
 
 }
